@@ -4,6 +4,11 @@ import { CurrentPriceResponse } from './interfaces';
 class CoinDesk {
   static baseUrl = 'https://api.coindesk.com/v1/';
 
+  /**
+   * Create and send a request to CoinDesk.
+   * @param endpoint
+   * @private
+   */
   private static async makeRequest(endpoint: string) {
     const requestConfig: AxiosRequestConfig = {
       url: endpoint,
@@ -14,7 +19,10 @@ class CoinDesk {
     return (await axios.request(requestConfig)).data;
   }
 
-  static currentPrice(): Promise<CurrentPriceResponse> {
+  /**
+   * Gets the current price of BTC.
+   */
+  public static currentPrice(): Promise<CurrentPriceResponse> {
     return this.makeRequest('bpi/currentprice.json');
   }
 }
