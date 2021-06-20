@@ -4,12 +4,12 @@ import { Currency } from './coin-desk/interfaces';
 import { decode } from 'html-entities';
 
 const argv = yargs(process.argv.slice(2)).options({
-  d: { type: 'number' },
-  i: { type: 'number' },
+  d: { type: 'number', default: 1 },
+  i: { type: 'number', default: 1 },
 }).argv;
 
-const duration = (argv.d || 0) * 1000; // get cl arg duration and convert to ms
-const interval = (argv.i || 1) * 1000; // get cl arg interval and convert to ms
+const duration = argv.d * 1000; // get cl arg duration and convert to ms
+const interval = argv.i * 1000; // get cl arg interval and convert to ms
 
 /**
  * Requests, formats & prints the latest BTC prices.
@@ -32,14 +32,14 @@ const printPrice = async () => {
 /**
  * Calls printPrice function at the given interval, raises exp if cannot connect to endpoint.
  */
-const intervalFn = setInterval(async () => {
+const intervalFn = async (duration: number, interval: number) => {
+  duration = duration - interval;
   try {
     await printPrice();
+    duration >= 0 && setTimeout(() => intervalFn(duration, interval), interval);
   } catch (e) {
     console.warn('There was an error attempting to fetch price data. Please try again later.');
-    clearInterval(intervalFn);
-    clearTimeout(durationFn);
   }
-}, interval);
+};
 
-const durationFn = setTimeout(() => duration && clearInterval(intervalFn), duration);
+(async () => intervalFn(duration, interval))();

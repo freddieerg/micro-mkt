@@ -19,7 +19,7 @@ yarn install
 ## Usage
 Automatically build & run using the following script:
 
-Both duration & interval are optional arguments (in seconds) that default to 1s each. Setting Duration to 0 will let the script run infinitely.
+Both duration & interval are optional arguments (in seconds) that default to 1s each.
 
 ```bash
 yarn start -d DURATION -i INTERVAL
