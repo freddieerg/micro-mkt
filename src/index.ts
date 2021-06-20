@@ -4,7 +4,7 @@ import { Currency } from './coin-desk/interfaces';
 import { decode } from 'html-entities';
 
 const argv = yargs(process.argv.slice(2)).options({
-  d: { type: 'number', default: 1 },
+  d: { type: 'number', default: 0 },
   i: { type: 'number', default: 1 },
 }).argv;
 
